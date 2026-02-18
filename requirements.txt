@@ -1,0 +1,14 @@
+transformers>=4.40
+datasets>=2.18
+accelerate>=0.28
+sentencepiece>=0.2
+evaluate>=0.4
+numpy
+pandas
+scikit-learn
+matplotlib
+tqdm
+regex
+jiwer
+kaggle
+streamlit
