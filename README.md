@@ -95,39 +95,46 @@ Why: This matches real app workflows where you want a single decision and a conf
   - Precision (class 1): `0.9935`
   - Recall (class 1): `0.8773`
   - F1 (class 1): `0.9318`
+
 - Transformer (DistilBERT):
-  - Accuracy: `0.9695`
-  - Precision (class 1): `0.9722`
-  - Recall (class 1): `0.9667`
-  - F1 (class 1): `0.9695`
+  - Accuracy: `0.9604`
+  - Precision (class 1): `0.9859`
+  - Recall (class 1): `0.9343`
+  - F1 (class 1): `0.9594`
 
 Interpretation:
-- This is a classification problem where a simple baseline already performs well, which is normal for many text tasks.
-- The baseline is extremely high precision for injections, but it misses more injections (lower recall). That means more false negatives.
+- TF-IDF is a strong baseline for this task, especially for precision.
+- The baseline misses more injections (lower recall), which is risky for guardrails.
 - The transformer is more balanced and catches more injections (higher recall), with a small precision drop.
 
 ### External dataset (`deepset/prompt-injections`)
 - Baseline:
   - Accuracy: `0.7509`
   - Injection F1: `0.5000`
-  - Injection recall is very low (`0.3350`), meaning it often predicts benign even when the prompt is injection.
+  - Injection recall: `0.3350` (very low)
+
 - Transformer:
-  - Accuracy: `0.7527`
-  - Injection F1: `0.7205`
-  - Injection recall is high (`0.8571`), meaning it catches most injections, but with more false positives (precision `0.6214`).
+  - Accuracy: `0.8022`
+  - Injection F1: `0.7173`
+  - Injection recall: `0.6749`
+  - Injection precision: `0.7654`
 
 Interpretation:
-- The baseline clearly collapses on recall under domain shift. It tends to label too many injection prompts as benign.
-- The transformer generalizes much better for safety purposes because it reduces false negatives, even if that means more false positives (blocking some benign prompts).
+- The baseline collapses on recall under domain shift, it often predicts benign even when the prompt is injection.
+- The transformer generalizes better for safety, it reduces false negatives even if it blocks some benign prompts.
+
 
 ### Guardrail behavior notes (qualitative)
-From the notebook demo examples, injection-style prompts were high-confidence `BLOCK` (around `0.996` to `0.997`) while normal requests like summarization and translation were typically `ALLOW`.
+From the notebook demo examples, injection-style prompts were high-confidence `BLOCK` (around `0.9`) while normal requests like summarization and translation were typically `ALLOW`.
 
 I also observed a consistent edge case during manual testing:
 - Very short, ambiguous prompts (examples: "hi", "hello") can cause the transformer to behave more aggressively and sometimes over-predict injection.
 - The baseline is often more stable on these tiny inputs.
 
 This is a known practical tradeoff: the transformer is better for catching attacks, but it may over-block low-information prompts.
+
+Note: If you retrain the transformer, you should expect slightly different results each run.
+
 
 ## How to run
 1) Create and activate a virtual environment (Python 3.10+).
