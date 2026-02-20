@@ -1,8 +1,29 @@
-data/
+# Datasets and processed splits
+data/processed/
+!data/README.md
+
+# Model artifacts
 outputs/models/
+
+# Virtual env + python junk
 .venv/
 __pycache__/
+**/__pycache__/
 .ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# Env files
 .env
 .env.*
 *.env
+
+# Common model file extensions (extra safety)
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.pkl
+*.joblib
+*.onnx
+*.tflite
+*.safetensors
