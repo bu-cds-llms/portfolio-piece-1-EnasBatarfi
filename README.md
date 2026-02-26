@@ -1,5 +1,7 @@
 # Prompt Injection Detection for LLM Safety
 
+Note: The last commit only updates markdown/documentation. The notebook was rerun to regenerate metrics and figures, so small metric differences are expected due to nondeterministic training when seeds and fully deterministic settings are not enforced. No model or preprocessing code was changed.
+
 ## Table of Contents
 - [Overview](#overview)
 - [Why this problem matters](#why-this-problem-matters)
@@ -97,10 +99,10 @@ Why: This matches real app workflows where you want a single decision and a conf
   - F1 (class 1): `0.9318`
 
 - Transformer (DistilBERT):
-  - Accuracy: `0.9604`
-  - Precision (class 1): `0.9859`
-  - Recall (class 1): `0.9343`
-  - F1 (class 1): `0.9594`
+  - Accuracy: `0.9600`
+  - Precision (class 1): `0.9949`
+  - Recall (class 1): `0.9248`
+  - F1 (class 1): `0.9586`
 
 Interpretation:
 - TF-IDF is a strong baseline for this task, especially for precision.
@@ -114,10 +116,10 @@ Interpretation:
   - Injection recall: `0.3350` (very low)
 
 - Transformer:
-  - Accuracy: `0.8022`
-  - Injection F1: `0.7173`
-  - Injection recall: `0.6749`
-  - Injection precision: `0.7654`
+  - Accuracy: `0.8168`
+  - Injection F1: `0.6970`
+  - Injection recall: `0.5665`
+  - Injection precision: `0.9055`
 
 Interpretation:
 - The baseline collapses on recall under domain shift, it often predicts benign even when the prompt is injection.
